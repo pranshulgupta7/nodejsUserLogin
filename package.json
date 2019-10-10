@@ -1,0 +1,20 @@
+{
+  "name": "nodejs-assignment",
+  "version": "0.1.0",
+  "description": "Nodejs Assignment Nagarro",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Pranshul Gupta",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-session": "^1.16.2",
+    "hbs": "^4.0.5",
+    "mysql2": "^1.7.0",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "sequelize": "^5.19.4"
+  }
+}

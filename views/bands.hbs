@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Bands List</title>
+</head>
+<body>
+    <form method="POST" action="/api/bands/{{id}}">
+        <input placeholder="Add Popular Band" name="name" type="text">
+        <input type="submit">
+    </form>
+    <br>
+    
+    <ul>
+        {{#each bands as |band|}}
+            <li>{{band.name}}</li>
+            <form method="POST" action="/api/bands/delete/{{band.id}}">
+                <input type="submit">
+            </form>
+            <form method="POST" action="/api/bands/edit/{{id}}">
+                <input placeholder="New Name" name="name" type="text">
+                <input type="submit">
+            </form>
+        {{/each}}
+    </ul>
+</body>
+</html>
