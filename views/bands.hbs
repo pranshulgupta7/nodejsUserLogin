@@ -35,7 +35,7 @@
     <ul class="list-group col-7">
         <label class="text-center" for="inputBand">Popular Bands List</label>
         {{#each bands as |band|}}
-            <li class="list-group-item list-group-item-dark">{{band.name}}</li>
+            <li class="list-group-item list-group-item-dark">>>{{band.name}}</li>
             <form method="POST" action="/api/bands/delete/{{band.id}}">
                 <div class="form-group text-center">
                 <label for="deleteBand">Want to Delete Band, Click On Following Button</label>
