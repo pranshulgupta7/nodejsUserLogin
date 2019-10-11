@@ -5,58 +5,70 @@ const Users = require('../../db').Users;
 const route = require('express').Router();
 
 route.get('/:id',(req,res) => {
-    Bands.findAll({
-        where: {
-            userId: req.params.id,
-            isDelete: '1'
-        },
-        include: [
-            {
-                model: Users,
-            }
-        ]
-    })
-        .then((bands) => {
-            res.status(200).render('bands',{bands:bands,id:req.params.id})
+    if(req.user){
+        Bands.findAll({
+            where: {
+                userId: req.params.id,
+                isDelete: '1'
+            },
+            include: [
+                {
+                    model: Users,
+                }
+            ]
         })
-        .catch((err) => {
-            res.status(500).send({
-                error: "Could not retrive all bands"
+            .then((bands) => {
+                res.status(200).render('bands',{bands:bands,id:req.params.id})
             })
-        })
+            .catch((err) => {
+                res.status(500).send({
+                    error: "Could not retrive all bands"
+                })
+            })
+    }else{
+        res.redirect('/login');
+    };
 })
 
 route.post('/:id',(req,res) => {
-    Bands.create({
-        name: req.body.name,
-        userId: req.params.id
-    }).then((band) => {
-        res.status(201).redirect(`/api/bands/${req.params.id}`)
-    }).catch((error) => {
-        res.status(501).send({
-            error: "Could not add band"
+    if(req.user){
+        Bands.create({
+            name: req.body.name,
+            userId: req.params.id
+        }).then((band) => {
+            res.status(201).redirect(`/api/bands/${req.params.id}`)
+        }).catch((error) => {
+            res.status(501).send({
+                error: "Could not add band"
+            })
         })
-    })
+    }else{
+        res.redirect('/login')
+    }
 })
 
 route.post('/delete/:id',(req,res) => {
-    Bands.update({
-        isDelete: '0'
-    },
-    {
-    where:{
-        id: req.params.id
-    }}).then((band) => {
-        Bands.findOne({
-            where: {
-                id: req.params.id
-            }
-        }).then((band) => {
-            res.status(201).redirect(`/api/bands/${band.userId}`)
+    if(req.user){
+        Bands.update({
+            isDelete: '0'
+        },
+        {
+        where:{
+            id: req.params.id
+        }}).then((band) => {
+            Bands.findOne({
+                where: {
+                    id: req.params.id
+                }
+            }).then((band) => {
+                res.status(201).redirect(`/api/bands/${band.userId}`)
+            })
+        }).catch((err) => {
+            res.status(501)
         })
-    }).catch((err) => {
-        res.status(501)
-    })
+    }else{
+        res.redirect('/login')
+    }
 })
 
 route.post('/edit/:id',(req,res) => {

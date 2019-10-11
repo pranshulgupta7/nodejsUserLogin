@@ -20,6 +20,10 @@ server.set('views','views');
 
 // server.use('/',require('./routes/root'));
 
+server.get('/',(req,res) => {
+    res.render('firstPAge')
+})
+
 server.use('/',express.static(path.join(__dirname,'public')));
 
 server.use('/',require('./routes/root'));
